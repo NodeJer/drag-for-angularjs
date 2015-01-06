@@ -7,6 +7,9 @@ angular.module('drag', []).
 
 directive('drag', function(){
 	return {
+		controller: ['$location', function($location){
+			console.log($location.hash())
+		}],
 		link: function($scope, $element, $attrs) {
 			var $doc = angular.element(document);
 			var mouseX = 0,
