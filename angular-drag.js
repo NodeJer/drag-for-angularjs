@@ -5,24 +5,20 @@
 */
 angular.module('drag', []).
 
-directive('drag', function(){
+directive('drag', ['$document', function($document){
 	return {
 		link: function($scope, $element, $attrs) {
-			var $doc = angular.element(document);
+
 			var mouseX = 0,
 				mouseY = 0,
 				moveX = 0,
 				moveY = 0,
 				x=0, y=0;
 
-			$element.css({
-				left: $element[0].offsetLeft+'px',
-				top: $element[0].offsetTop+'px'
-			}).css('margin', 0);
-
-
-			$element.on('mousedown', function(ev){
+			$element.on('mousedown touchstart', function(ev){
 				ev.preventDefault();
+
+				ev = (ev.touches && ev.touches[0]) || ev;
 
 				var offsetLeft = $element[0].offsetLeft;
 				var offsetTop = $element[0].offsetTop;
@@ -33,9 +29,10 @@ directive('drag', function(){
 				if(this.setCapture){
 					this.setCapture();
 				}
-				
 
-				$doc.on('mousemove', function(ev){
+				$document.on('mousemove touchmove', function(ev){
+					ev = (ev.touches && ev.touches[0]) || ev;
+
 					moveX = ev.clientX - mouseX;
 					moveY = ev.clientY - mouseY;
 
@@ -43,7 +40,7 @@ directive('drag', function(){
 					y = offsetTop+moveY;
 
 					if($attrs.limitX == 'true'){
-						var maxX = $doc[0].documentElement.clientWidth-$element[0].offsetWidth;
+						var maxX = $document[0].documentElement.clientWidth-$element[0].offsetWidth;
 
 						if(x <= 0){
 							x = 0;
@@ -53,7 +50,7 @@ directive('drag', function(){
 						}
 					}
 					if($attrs.limitY == 'true'){
-						var maxY = $doc[0].documentElement.clientHeight-$element[0].offsetHeight;
+						var maxY = $document[0].documentElement.clientHeight-$element[0].offsetHeight;
 						
 						if(y <= 0){
 							y = 0;
@@ -67,13 +64,13 @@ directive('drag', function(){
 					$element.css('top', y+'px');
 				});
 
-				$doc.on('mouseup', function(){
+				$document.on('mouseup touchend', function(){
 					if(this.releaseCapture){
 						this.releaseCapture();
 					}
-					$doc.off('mousemove mouseup');
+					$document.off('mousemove mouseup touchend touchmove');
 				});
 			});
 		}
 	};
-});
+}]);
