@@ -1,15 +1,7 @@
-/**
-* drag Module
-*
-* Description
-*/
 angular.module('drag', []).
 
 directive('drag', ['$document', function($document){
 	return {
-		controller: ['$location', function($location){
-			console.log($location.hash())
-		}],
 		link: function($scope, $element, $attrs) {
 
 			var mouseX = 0,
