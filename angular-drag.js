@@ -1,7 +1,16 @@
+/**
+* drag Module
+*
+* Description
+*/
 angular.module('drag', []).
 
 directive('drag', ['$document', function($document){
 	return {
+		scope:{
+			limitX: '=',
+			limitY:'='
+		},
 		link: function($scope, $element, $attrs) {
 
 			var mouseX = 0,
@@ -34,7 +43,7 @@ directive('drag', ['$document', function($document){
 					x = offsetLeft+moveX;
 					y = offsetTop+moveY;
 
-					if($attrs.limitX == 'true'){
+					if($scope.limitX){
 						var maxX = $document[0].documentElement.clientWidth-$element[0].offsetWidth;
 
 						if(x <= 0){
@@ -44,7 +53,7 @@ directive('drag', ['$document', function($document){
 							x = maxX;
 						}
 					}
-					if($attrs.limitY == 'true'){
+					if($scope.limitY){
 						var maxY = $document[0].documentElement.clientHeight-$element[0].offsetHeight;
 						
 						if(y <= 0){
