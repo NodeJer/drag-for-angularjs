@@ -11,6 +11,7 @@ directive('drag', ['$document', function($document){
 			limitX: '=',
 			limitY:'='
 		},
+		
 		link: function($scope, $element, $attrs) {
 
 			var mouseX = 0,
