@@ -41,8 +41,8 @@ directive('drag', ['$document', function($document){
 					moveX = ev.clientX - mouseX;
 					moveY = ev.clientY - mouseY;
 
-					x = offsetLeft+moveX;
-					y = offsetTop+moveY;
+					x = offsetLeft+moveX | 0;
+					y = offsetTop+moveY | 0;
 
 					if($scope.limitX){
 						var maxX = $document[0].documentElement.clientWidth-$element[0].offsetWidth;
