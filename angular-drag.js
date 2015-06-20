@@ -3,7 +3,7 @@
 *
 * Description
 */
-angular.module('drag', []).
+angular.module('ng.drag', []).
 
 directive('drag', ['$document', function($document){
 	return {
